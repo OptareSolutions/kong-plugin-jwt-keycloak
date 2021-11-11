@@ -10,7 +10,7 @@ supported_platforms = {"linux", "macosx"}
 
 local github_account_name = "OptareSolutions"
 local github_repo_name = "kong-plugin-jwt-keycloak"
-local github_tag = "master"
+local github_tag = "1.1.0"
 
 source = {
     url = "git://github.com/"..github_account_name.."/"..github_repo_name,
