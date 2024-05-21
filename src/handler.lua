@@ -13,7 +13,7 @@ local validate_client_roles = require("kong.plugins.jwt-keycloak.validators.role
 local re_gmatch = ngx.re.gmatch
 
 local JwtKeycloakHandler = {
-    VERSION = "1.2.1"
+    VERSION = "1.3.0"
   }
 
 local priority_env_var = "JWT_KEYCLOAK_PRIORITY"
@@ -255,8 +255,8 @@ local function validate_signature(conf, jwt, second_call)
     --     kong.log.debug('validate_signature() jwt: ' .. table_to_string(jwt))
     local issuer_cache_key = 'issuer_keys_' .. jwt.claims.iss
     local well_known_endpoint
-    if conf.public_keys_url then
-        well_known_endpoint = conf.public_keys_url
+    if conf.custom_wellknown_endpoint then
+        well_known_endpoint = conf.custom_wellknown_endpoint
     else
         well_known_endpoint = keycloak_keys.get_wellknown_endpoint(conf.well_known_template, jwt.claims.iss)
     end
