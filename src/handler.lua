@@ -254,9 +254,16 @@ local function validate_signature(conf, jwt, second_call)
     kong.log.debug('Calling validate_signature()')
     --     kong.log.debug('validate_signature() jwt: ' .. table_to_string(jwt))
     local issuer_cache_key = 'issuer_keys_' .. jwt.claims.iss
-    local well_known_endpoint = keycloak_keys.get_wellknown_endpoint(conf.well_known_template, jwt.claims.iss)
+    local well_known_endpoint
+    if conf.public_keys_url then
+        well_known_endpoint = conf.public_keys_url
+    else
+        well_known_endpoint = keycloak_keys.get_wellknown_endpoint(conf.well_known_template, jwt.claims.iss)
+    end
+    kong.log.debug("Using well-known endpoint: " .. well_known_endpoint)
     -- Retrieve public keys
     local public_keys, err = kong.cache:get(issuer_cache_key, nil, get_keys, well_known_endpoint, true)
+
 
     if not public_keys then
         if err then
