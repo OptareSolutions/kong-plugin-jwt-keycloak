@@ -84,7 +84,7 @@ return {
             }
           },
           {
-            public_keys_url = typedefs.url
+            custom_wellknown_endpoint = typedefs.url
           },
           {
             iss_key_grace_period = {
