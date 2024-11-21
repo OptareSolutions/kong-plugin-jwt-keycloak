@@ -47,7 +47,8 @@ local function get_issuer_keys(well_known_endpoint)
     if err then
         return nil, err
     end
-
+    
+    kong.log.debug("Keycloak jwks_uri to obtain keys: " .. res['jwks_uri'])
     local res, err = get_request(res['jwks_uri'], req.scheme,  req.port)
     if err then
         return nil, err
